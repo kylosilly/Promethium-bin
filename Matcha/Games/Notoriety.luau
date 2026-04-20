@@ -9,6 +9,10 @@ local PrimaryAmmo = Character.PrimaryAmmo
 local MaxStamina = Character.MaxStamina
 local Stamina = Character.Stamina
 
+if (not SecondaryAmmo) or (not PrimaryAmmo) or (not MaxStamina) or (not Stamina) then
+    return notify("Make sure your in game before running this", "Promethium", 10)
+end
+
 local OldSecondaryAmmo = SecondaryAmmo.Value
 local OldPrimaryAmmo = PrimaryAmmo.Value
 local OldMaxStamina = MaxStamina.Value
@@ -34,7 +38,7 @@ UI.AddTab("Notoriety", function(Tab)
             Character.Stamina.Value = 9e9
         end
     end)
-    
+
     Mods:Toggle("InfAmmo", "Inf Ammo", function(Value)
         if (not Value) then
             Character.SecondaryAmmo.Value = OldSecondaryAmmo
