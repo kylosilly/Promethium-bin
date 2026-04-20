@@ -4,10 +4,10 @@ if (not Character) then
     return notify("Make sure your fully loaded in before running this", "Promethium", 10)
 end
 
-local SecondaryAmmo = Character.SecondaryAmmo
-local PrimaryAmmo = Character.PrimaryAmmo
-local MaxStamina = Character.MaxStamina
-local Stamina = Character.Stamina
+local SecondaryAmmo = Character:FindFirstChild("SecondaryAmmo", true)
+local PrimaryAmmo = Character:FindFirstChild("PrimaryAmmo", true)
+local MaxStamina = Character:FindFirstChild("MaxStamina", true)
+local Stamina = Character:FindFirstChild("Stamina", true)
 
 if (not SecondaryAmmo) or (not PrimaryAmmo) or (not MaxStamina) or (not Stamina) then
     return notify("Make sure your in game before running this", "Promethium", 10)
