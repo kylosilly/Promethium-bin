@@ -2513,7 +2513,7 @@ local Library = {
         
                 Notification.Removing = true
 
-                if (not Library.Notifications) then
+                if (not Library) then
                     return
                 end
         
