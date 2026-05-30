@@ -3346,13 +3346,14 @@ local Library = {
             end)
 
             function Button:Press()
-				if not Library then
-					return
-				end
-
                 Library:SafeCall(Button.Callback)
 
                 Items["Accent"]:Tween({BackgroundTransparency = 0, Size = UDim2.new(1, 0, 1, 0)})
+
+				if (not Library) or (not Library.Animation) then
+					return
+				end
+				
                 task.wait(Library.Animation.Time - 0.1)
                 Items["Accent"]:Tween({BackgroundTransparency = 1, Size = UDim2.new(0, 0, 1, 0)})
             end
@@ -3366,10 +3367,6 @@ local Library = {
             end
 
             Items["RealButton"]:Connect("MouseButton1Down", function()
-				if not Library then
-					return
-				end
-
                 Button:Press()
             end)
 
