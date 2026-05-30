@@ -25,10 +25,11 @@ local Mouse = cloneref(LocalPlayer:GetMouse())
 
 local Library = { 
     Flags = { },
-    MenuKeybind = tostring(Enum.KeyCode.X), -- has to be a string
+    MenuKeybind = "Enum.KeyCode.RightShift", -- has to be a string
 
-    Directory = "juanitaaaaaaa",
+    Directory = "Promethium",
     Folders = {
+        Sounds = "/Sounds",
         Assets = "/Assets",
         Configs = "/Configs",
         Themes = "/Themes"
@@ -234,6 +235,8 @@ local Library = {
         for _, Thread in Library.Threads do 
             coroutine.close(Thread)
         end
+
+        print(Items.Notification)
 
         if Self.Holder then 
             Self.Holder.Instance:Destroy()
@@ -2390,8 +2393,8 @@ local Library = {
                     Name = "\0",
                     Parent = Library.NotifHolder.Instance,
                     Size = UDim2.new(0, 0, 0, 25),
-                    AnchorPoint = Vector2.new(0, 0),
-                    Position = UDim2.new(0, -260, 0, GuiInset + Padding + 5),
+                    AnchorPoint = Vector2.new(0, 1),
+                    Position = UDim2.new(0, Padding, 1, -Padding),
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.X,
                     BackgroundColor3 = Library.Theme["Inline"]
