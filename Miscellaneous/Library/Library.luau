@@ -3369,7 +3369,7 @@ local Library = {
 				if not Library then
 					return
 				end
-				
+
                 Button:Press()
             end)
 
@@ -4803,6 +4803,14 @@ local Library = {
                     MenuSection:Button({Name = "Unload", Callback = function()
                         Library:Exit()
                     end})
+
+					MenuSection:Toggle({ Name = "Watermark", Flag = "Watermark", Default = Library.Items.Watermark.Instance.Visible, Callback = function(Value)
+						Library.Items.Watermark.Instance.Visible = Value
+					end})
+
+					MenuSection:Toggle({ Name = "Keybinds", Flag = "Keybinds", Default = Library.Items.KeybindList.Instance.Visible, Callback = function(Value)
+						Library.Items.KeybindList.Instance.Visible = Value
+					end})
 
                     MenuSection:Label({ Name = "Menu Keybind" }):Keybind({
                         Name = "Menu Keybind",
