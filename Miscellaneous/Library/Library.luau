@@ -3346,6 +3346,10 @@ local Library = {
             end)
 
             function Button:Press()
+				if not Library then
+					return
+				end
+
                 Library:SafeCall(Button.Callback)
 
                 Items["Accent"]:Tween({BackgroundTransparency = 0, Size = UDim2.new(1, 0, 1, 0)})
