@@ -2512,6 +2512,10 @@ local Library = {
                 if Notification.Removing then return end
         
                 Notification.Removing = true
+
+                if (not Library.Notifications) then
+                    return
+                end
         
                 for Index, Value in Library.Notifications do
                     if Value == Notification then
