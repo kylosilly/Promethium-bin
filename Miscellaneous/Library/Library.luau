@@ -236,7 +236,7 @@ local Library = {
             coroutine.close(Thread)
         end
 
-        print(Items.Notification)
+        print(Library.Items.Notification)
 
         if Self.Holder then 
             Self.Holder.Instance:Destroy()
