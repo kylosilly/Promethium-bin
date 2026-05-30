@@ -2380,13 +2380,13 @@ local Library = {
         
             local function UpdatePositions()
                 local Y = Library.NotifHolder.Instance.AbsoluteSize.Y - Padding
-            
+
                 for Index, Value in Library.Notifications do
                     local Height = Value.Items["Notification"].Instance.AbsoluteSize.Y
-            
-                    Value.Items["Notification"]:Tween({Position = UDim2.new(0, Padding, 0, Y - Height)}, NotifTweenInfo)
-            
-                    Y += Height + Spacing
+                    
+                    Value.Items["Notification"]:Tween({Position = UDim2.new(0, Padding, 0, Y)}, NotifTweenInfo)
+                    
+                    Y -= (Height + Spacing)
                 end
             end
         
@@ -2395,8 +2395,8 @@ local Library = {
                     Name = "\0",
                     Parent = Library.NotifHolder.Instance,
                     Size = UDim2.new(0, 0, 0, 25),
-                    AnchorPoint = Vector2.new(1, 1),
-                    Position = UDim2.new(1, -Padding, 1, -Padding),
+                    AnchorPoint = Vector2.new(0, 1),
+                    Position = UDim2.new(0, Padding, 1, -Padding),
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.X,
                     BackgroundColor3 = Library.Theme["Inline"]
