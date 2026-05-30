@@ -332,6 +332,10 @@ local Library = {
     end
 
     Library.Tween = function(Self, Properties, Info, IsRawItem)
+        if not Library then
+            return
+        end
+
         local Object = Self.Instance or IsRawItem
         Info = Info or TweenInfo.new(Library.Animation.Time, Enum.EasingStyle[Library.Animation.Style], Enum.EasingDirection[Library.Animation.Direction])
 
@@ -3342,10 +3346,6 @@ local Library = {
             end)
 
             function Button:Press()
-                if not Library then
-                    return
-                end
-
                 Library:SafeCall(Button.Callback)
 
                 Items["Accent"]:Tween({BackgroundTransparency = 0, Size = UDim2.new(1, 0, 1, 0)})
