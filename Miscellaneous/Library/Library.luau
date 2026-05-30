@@ -3366,6 +3366,10 @@ local Library = {
             end
 
             Items["RealButton"]:Connect("MouseButton1Down", function()
+				if not Library then
+					return
+				end
+				
                 Button:Press()
             end)
 
