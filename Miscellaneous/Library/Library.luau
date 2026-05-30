@@ -2379,12 +2379,12 @@ local Library = {
             local Spacing = 8
         
             local function UpdatePositions()
-                local Y = GuiInset + Padding + 5
+                local Y = Library.NotifHolder.Instance.AbsoluteSize.Y - Padding
             
                 for Index, Value in Library.Notifications do
                     local Height = Value.Items["Notification"].Instance.AbsoluteSize.Y
             
-                    Value.Items["Notification"]:Tween({Position = UDim2.new(0, Padding, 0, Y)}, NotifTweenInfo)
+                    Value.Items["Notification"]:Tween({Position = UDim2.new(0, Padding, 0, Y - Height)}, NotifTweenInfo)
             
                     Y += Height + Spacing
                 end
