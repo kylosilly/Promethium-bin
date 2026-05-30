@@ -2368,44 +2368,43 @@ local Library = {
         Library.Notification = function(Self, Name, Duration, Color)
             Duration = Duration or 5
             Color = Color or Library.Theme.Accent
-        
+
             local Notification = {
                 Duration = Duration,
                 Removing = false,
                 Items = {}
             }
-        
+
             local Padding = 8
             local Spacing = 8
-        
+
             local function UpdatePositions()
                 local Y = Library.NotifHolder.Instance.AbsoluteSize.Y - Padding
 
                 for Index, Value in Library.Notifications do
                     local Height = Value.Items["Notification"].Instance.AbsoluteSize.Y
                     
-                    Value.Items["Notification"]:Tween({Position = UDim2.new(0, Padding, 0, Y)}, NotifTweenInfo)
+                    Value.Items["Notification"]:Tween({Position = UDim2.new(1, -Padding, 0, Y)}, NotifTweenInfo)
                     
                     Y -= (Height + Spacing)
                 end
             end
-        
+
             local Items = {} do
                 Items["Notification"] = Library:Create("Frame", {
                     Name = "\0",
                     Parent = Library.NotifHolder.Instance,
                     Size = UDim2.new(0, 0, 0, 25),
-                    AnchorPoint = Vector2.new(0, 1),
-                    Position = UDim2.new(0, Padding, 1, -Padding),
+                    AnchorPoint = Vector2.new(1, 1),
+                    Position = UDim2.new(1, -Padding, 1, -Padding),
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.X,
                     BackgroundColor3 = Library.Theme["Inline"]
                 }):AddToTheme({BackgroundColor3 = "Inline"})
-        
+
                 Library:Create("UIStroke", {
                     Name = "\0", 
-                    Parent = 
-                    Items["Notification"].Instance, 
+                    Parent = Items["Notification"].Instance, 
                     ApplyStrokeMode = Enum.ApplyStrokeMode.Border, 
                     LineJoinMode = Enum.LineJoinMode.Miter, 
                     Color = Library.Theme["Border"], 
@@ -2419,14 +2418,14 @@ local Library = {
                     LineJoinMode = Enum.LineJoinMode.Miter, 
                     Color = Library.Theme["Outline"]
                 }):AddToTheme({Color = "Outline"})
-        
+
                 Library:Create("UIPadding", {
                     Name = "\0",
                     Parent = Items["Notification"].Instance,
                     PaddingRight = UDim.new(0, 8),
                     PaddingLeft = UDim.new(0, 8)
                 })
-        
+
                 Items["Text"] = Library:Create("TextLabel", {
                     Name = "\0",
                     FontFace = Library.Font,
@@ -2440,7 +2439,7 @@ local Library = {
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.XY
                 }):AddToTheme({TextColor3 = "Text"})
-        
+
                 Items["Liner"] = Library:Create("Frame", {
                     Name = "\0",
                     Parent = Items["Notification"].Instance,
@@ -2449,7 +2448,7 @@ local Library = {
                     BorderSizePixel = 0,
                     BackgroundColor3 = Color
                 })
-        
+
                 Items["DurationLiner"] = Library:Create("Frame", {
                     Name = "\0",
                     Parent = Items["Notification"].Instance,
@@ -2458,13 +2457,13 @@ local Library = {
                     BorderSizePixel = 0,
                     BackgroundColor3 = Color
                 })
-        
+
                 Notification.Items = Items
             end
-        
-            local FadeNotification = function(Transparency) -- cant use fadedescendants because that one saves the transparency and it breaks and looks really gay 
+
+            local FadeNotification = function(Transparency)
                 Items["Notification"]:Tween({BackgroundTransparency = Transparency}, NotifTweenInfo)
-        
+
                 for _, Value in Items["Notification"].Instance:GetDescendants() do
                     if Value:IsA("TextLabel") then
                         Library:Tween({TextTransparency = Transparency}, NotifTweenInfo, Value)
@@ -2475,18 +2474,18 @@ local Library = {
                     end
                 end
             end
-        
+
             table.insert(Library.Notifications, 1, Notification)
-        
+
             task.wait()
-        
+
             local Width = Items["Notification"].Instance.AbsoluteSize.X
             local Height = Items["Notification"].Instance.AbsoluteSize.Y
-        
+
             Items["Notification"].Instance.Size = UDim2.new(0, Width, 0, Height)
             Items["Notification"].Instance.AutomaticSize = Enum.AutomaticSize.None
             Items["Notification"].Instance.BackgroundTransparency = 1
-        
+
             for Index, Value in Items["Notification"].Instance:GetDescendants() do
                 if Value:IsA("TextLabel") then
                     Value.TextTransparency = 1
@@ -2496,44 +2495,44 @@ local Library = {
                     Value.Transparency = 1
                 end
             end
-        
+
             UpdatePositions()
             FadeNotification(0)
-        
+
             Items["DurationLiner"]:Tween({Size = UDim2.new(0, 0, 0, 1)}, TweenInfo.new(Duration, Enum.EasingStyle.Linear, Enum.EasingDirection.Out))
-        
+
             task.spawn(function()
                 local Tick = tick()
-        
+
                 while tick() - Tick < Duration and not Notification.Removing do
                     task.wait(0.05)
                 end
-        
+
                 if Notification.Removing then return end
-        
+
                 Notification.Removing = true
 
                 if (not Library) then
                     return
                 end
-        
+
                 for Index, Value in Library.Notifications do
                     if Value == Notification then
                         table.remove(Library.Notifications, Index)
                         break
                     end
                 end
-        
-                Items["Notification"]:Tween({Position = UDim2.new(0, -(Width + Padding + 20), 0, Items["Notification"].Instance.Position.Y.Offset)}, NotifTweenInfo)
+
+                Items["Notification"]:Tween({Position = UDim2.new(1, (Width + Padding + 20), 0, Items["Notification"].Instance.Position.Y.Offset)}, NotifTweenInfo)
 
                 FadeNotification(1)
-        
+
                 task.delay(NotifTweenInfo.Time, function()
                     Items["Notification"].Instance:Destroy()
                     UpdatePositions()
                 end)
             end)
-        
+
             return Notification
         end
         
