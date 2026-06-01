@@ -3729,7 +3729,7 @@ Library.Dropdown = function(Self, Params)
                     ScrollBarThickness = 2,
                     ScrollBarImageColor3 = Library.Theme["Accent"],
                     CanvasSize = UDim2.new(0, 0, 0, 0),
-                    AutomaticCanvasSize = Enum.AutomaticCanvasSize.Y,
+                    AutomaticCanvasSize = Enum.AutomaticSize.Y,
                     Active = true
                 }):AddToTheme({BackgroundColor3 = 'Background', ScrollBarImageColor3 = 'Accent'})
                 
