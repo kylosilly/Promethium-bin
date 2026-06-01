@@ -3585,7 +3585,7 @@ local Library = {
             return setmetatable(Slider, Library)
         end
 
-        Library.Dropdown = function(Self, Params)
+Library.Dropdown = function(Self, Params)
             Params = Params or { }
 
             local Dropdown = {
@@ -3718,21 +3718,20 @@ local Library = {
                     AutomaticSize = Enum.AutomaticSize.Y
                 }):AddToTheme({TextColor3 = 'Text'})          
                 
-                Items["OptionHolder"] = Library:Create("TextButton", {
+                Items["OptionHolder"] = Library:Create("ScrollingFrame", {
                     Name = "\0",
-                    FontFace = Library.Font,
-                    TextSize = Library.FontSize,
                     Parent = Library.Holder.Instance,
                     Visible = false,
-                    TextColor3 = Color3.fromRGB(0, 0, 0),
-                    Text = "",
-                    AutoButtonColor = false,
-                    Size = UDim2.new(0, 200, 0, 50),
+                    Size = UDim2.new(0, 200, 0, 150),
                     Position = UDim2.new(0, 792, 0, 649),
                     BorderSizePixel = 0,
-                    AutomaticSize = Enum.AutomaticSize.Y,
-                    BackgroundColor3 = Library.Theme["Background"]
-                }):AddToTheme({BackgroundColor3 = 'Background'})
+                    BackgroundColor3 = Library.Theme["Background"],
+                    ScrollBarThickness = 2,
+                    ScrollBarImageColor3 = Library.Theme["Accent"],
+                    CanvasSize = UDim2.new(0, 0, 0, 0),
+                    AutomaticCanvasSize = Enum.AutomaticCanvasSize.Y,
+                    Active = true
+                }):AddToTheme({BackgroundColor3 = 'Background', ScrollBarImageColor3 = 'Accent'})
                 
                 Library:Create("UIStroke", {
                     Name = "\0",
@@ -3754,16 +3753,16 @@ local Library = {
                 Library:Create("UIPadding", {
                     Name = "\0",
                     Parent = Items["OptionHolder"].Instance,
-                    PaddingTop = UDim.new(0, 8),
-                    PaddingBottom = UDim.new(0, 8),
-                    PaddingRight = UDim.new(0, 8),
-                    PaddingLeft = UDim.new(0, 8)
+                    PaddingTop = UDim.new(0, 6),
+                    PaddingBottom = UDim.new(0, 6),
+                    PaddingRight = UDim.new(0, 6),
+                    PaddingLeft = UDim.new(0, 6)
                 })
 
                 Library:Create("UIListLayout", {
                     Name = "\0",
                     Parent = Items["OptionHolder"].Instance,
-                    Padding = UDim.new(0, 8),
+                    Padding = UDim.new(0, 4),
                     SortOrder = Enum.SortOrder.LayoutOrder
                 })
 
@@ -3833,10 +3832,9 @@ local Library = {
                     TextColor3 = Library.Theme["Inactive Text"],
                     Text = Value,
                     AutoButtonColor = false,
-                    Size = UDim2.new(1, 0, 0, 0),
+                    Size = UDim2.new(1, -4, 0, 16),
                     BackgroundTransparency = 1,
-                    BorderSizePixel = 0,
-                    AutomaticSize = Enum.AutomaticSize.Y
+                    BorderSizePixel = 0
                 }):AddToTheme({TextColor3 = 'Inactive Text'})
 
                 local OptionData = {
@@ -3972,10 +3970,18 @@ local Library = {
 
                     local Scale = Library:GetScreenScale()
                     OptionHolder.Position = Library:PopupPosition(RealDropdown, OptionHolder, 0)
+                    
+                    local TotalItemHeight = 12 
+                    for _, _ in Dropdown.Options do
+                        TotalItemHeight = TotalItemHeight + 20 
+                    end
+                    local DropdownHeight = math.clamp(TotalItemHeight, 40, 150)
+
                     OptionHolder.Size = UDim2.new(0, RealDropdown.AbsoluteSize.X / Scale, 0, 0)
                     
                     Items["OptionHolder"]:Tween({
-                        Position = Library:PopupPosition(RealDropdown, OptionHolder, 10)
+                        Position = Library:PopupPosition(RealDropdown, OptionHolder, 10),
+                        Size = UDim2.new(0, RealDropdown.AbsoluteSize.X / Scale, 0, DropdownHeight)
                     })
                     
                     Items["OptionHolder"]:FadeDescendants(true, function()
@@ -3991,7 +3997,8 @@ local Library = {
                     Library.OpenFrames[Dropdown] = Dropdown 
                 else
                     Items["OptionHolder"]:Tween({
-                        Position = Library:PopupPosition(RealDropdown, OptionHolder, -10)
+                        Position = Library:PopupPosition(RealDropdown, OptionHolder, -10),
+                        Size = UDim2.new(0, OptionHolder.Size.X.Offset, 0, 0)
                     })
 
                     Items["OptionHolder"]:FadeDescendants(false, function()
